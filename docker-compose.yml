@@ -1,0 +1,15 @@
+version: '2'
+services:
+  proxy:
+    build: proxy
+    command: /usr/bin/supervisord
+    volumes:
+      - ./proxy/certs:/etc/nginx/certificates
+      - ./proxy/sites-enabled:/etc/nginx/sites-enabled
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+  web:
+    build: web

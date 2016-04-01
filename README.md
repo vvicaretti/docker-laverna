@@ -9,28 +9,61 @@ This setup includes:
 
 laverna_proxy
 * supervisord
-* nginx
+* nginx (reverse proxy)
 
 laverna_web
 * supervisord
-* nginx
+* nginx (web server)
 * laverna
 
-## Using the containers
+## Generate the certificates with letsencrypt
 
-Generate the certificates:
-
+* Install dependencies
 ```bash
-$ cd proxy/certs/
-$ openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout cert.key -out cert.crt
+# apt-get install nginx git bc
+# git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt
 ```
 
-Customize the Nginx configuration:
+* add the following lines to **/etc/nginx/sites-available/default**
 ```bash
+location ~ /.well-known {
+        allow all;
+}
+```
+
+* restart nginx
+```bash
+# systemctl restart nginx
+```
+
+* request the certificate
+```bash
+# cd /opt/letsencrypt
+# ./letsencrypt-auto certonly -a webroot --webroot-path=/usr/share/nginx/html -d notes.example.com
+```
+
+* copy the generated certificates under laverna/proxy/certs
+```bash
+# cd /etc/letsencrypt/live/notes.example.com
+# cp fullchain.pem /path/to/laverna/proxy/certs
+# cp privkey.pem /path/to/laverna/proxy/certs
+```
+
+* generate strong DH group
+```bash
+# openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+# cp /etc/ssl/certs/dhparam.pem /path/to/laverna/proxy/certs
+```
+
+## Use the containers
+
+Customize the nginx configuration:
+```bash
+$ cd laverna
 $ vim proxy/sites-enabled/proxy
 ```
 
 Install docker-compose and start the containers:
 ```bash
-$ docker-compose up
+$ docker-compose up -d
 ```

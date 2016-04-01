@@ -6,6 +6,7 @@ services:
     volumes:
       - ./proxy/certs:/etc/nginx/certificates
       - ./proxy/sites-enabled:/etc/nginx/sites-enabled
+      - ./proxy/logs:/var/log/nginx
     ports:
       - "80:80"
       - "443:443"

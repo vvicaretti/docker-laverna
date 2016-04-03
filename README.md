@@ -7,11 +7,11 @@ This is a [Docker](https://docker.com) compose configuration to setup your own l
 
 This setup includes:
 
-laverna_proxy
+laverna:proxy
 * supervisord
 * nginx (reverse proxy)
 
-laverna_web
+laverna:web
 * supervisord
 * nginx (web server)
 * laverna

@@ -1,7 +1,7 @@
 version: '2'
 services:
   proxy:
-    build: proxy
+    image: vincentai/laverna:proxy
     command: /usr/bin/supervisord
     volumes:
       - ./proxy/certs:/etc/nginx/certificates
@@ -13,4 +13,4 @@ services:
     depends_on:
       - web
   web:
-    build: web
+    image: vincentai/laverna:web

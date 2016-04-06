@@ -42,17 +42,14 @@ location ~ /.well-known {
 # ./letsencrypt-auto certonly -a webroot --webroot-path=/usr/share/nginx/html -d notes.example.com
 ```
 
-* copy the generated certificates under laverna/proxy/certs
+* edit the docker-compose.yml config
 ```bash
-# cd /etc/letsencrypt/live/notes.example.com
-# cp fullchain.pem /path/to/laverna/proxy/certs
-# cp privkey.pem /path/to/laverna/proxy/certs
+sed -i -e 's/notes.examples.com/your.site.com/' docker-compose.yml
 ```
 
 * generate strong DH group
 ```bash
 # openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
-# cp /etc/ssl/certs/dhparam.pem /path/to/laverna/proxy/certs
 ```
 
 ## Use the containers

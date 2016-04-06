@@ -18,6 +18,8 @@ laverna:web
 
 ## Generate the certificates with letsencrypt
 
+NOTE: these commands needs to be run on the docker host
+
 * Install dependencies
 ```bash
 # apt-get install nginx git bc

@@ -4,9 +4,10 @@ services:
     image: vincentai/laverna:proxy
     command: /usr/bin/supervisord
     volumes:
-      - ./proxy/certs:/etc/nginx/certificates
       - ./proxy/sites-enabled:/etc/nginx/sites-enabled
       - ./proxy/logs:/var/log/nginx
+      - ./etc/letsencrypt/live/notes.example.com:/etc/nginx/certificates
+      - ./etc/ssl/certs:/etc/ssl/certs
     ports:
       - "80:80"
       - "443:443"
